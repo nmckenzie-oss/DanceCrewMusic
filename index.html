@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Assignment Tracks</title>
+    <title>Dance Crew Music</title>
     
     <style>
         body {
@@ -50,11 +50,34 @@
             border-top: 1px dashed #eee;
             padding-top: 10px;
         }
-        /* Style for future additions */
-        .coming-soon {
-            color: #a0a0a0;
-            text-align: center;
-            margin-top: 30px;
+        .speed-control {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+        .speed-value {
+            font-weight: bold;
+            display: inline-block;
+            min-width: 40px;
+            text-align: right;
+            margin-left: 5px;
+        }
+        .reset-button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #d9534f;
+            color: white;
+            margin-left: 10px;
+        }
+        .reset-button:hover {
+            background-color: #c9302c;
+        }
+        .speed-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -66,24 +89,40 @@
         <div class="song-item">
             <h2>1. The Crew Song (Pirate Theme)</h2>
             <p>Listen to the main theme for our pirate-themed piece.</p>
-            <audio controls>
-                <source src="[URL_TO_PIRATE_THEME_MP3]" type="audio/mpeg">
+            <audio controls id="audio1">
+                <source src="music/Pirate_Theme.mp3" type="audio/mpeg"> 
                 Your browser does not support the audio element.
             </audio>
+
+            <div class="speed-control">
+                <label for="speedSlider1" class="speed-label">Playback Speed (0.5x to 2.0x):</label>
+                <input type="range" id="speedSlider1" min="0.5" max="2.0" value="1.0" step="0.05" oninput="changeSpeed('audio1', 'speedValue1', this.value)">
+                <span id="speedValue1" class="speed-value">1.0x</span>
+                <button class="reset-button" onclick="resetSpeed('audio1', 'speedSlider1', 'speedValue1')">Reset</button>
+            </div>
+
             <div class="notes">
-                **Note to Students:** Focus on the tempo and dynamics for your specific part.
+                Note to Students: Focus on the tempo and dynamics for your specific part.
             </div>
         </div>
 
         <div class="song-item">
-            <h2>2. Lost Boys</h2>
+            <h2>2. Lost Boys (Mini Crew)</h2>
             <p>This track provides the background for the next section of the performance.</p>
-            <audio controls>
-                <source src="[URL_TO_LOST_BOYS_MP3]" type="audio/mpeg">
+            <audio controls id="audio2">
+                <source src="music/Lost_Boys.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
+
+            <div class="speed-control">
+                <label for="speedSlider2" class="speed-label">Playback Speed (0.5x to 2.0x):</label>
+                <input type="range" id="speedSlider2" min="0.5" max="2.0" value="1.0" step="0.05" oninput="changeSpeed('audio2', 'speedValue2', this.value)">
+                <span id="speedValue2" class="speed-value">1.0x</span>
+                <button class="reset-button" onclick="resetSpeed('audio2', 'speedSlider2', 'speedValue2')">Reset</button>
+            </div>
+
             <div class="notes">
-                **Note to Students:** Pay attention to the transitions in this piece.
+                Note to Students: Pay attention to the transitions in this piece.
             </div>
         </div>
 
@@ -92,6 +131,41 @@
         </div>
 
     </div>
+
+    <script>
+        /**
+         * Changes the playback rate of the audio element.
+         * @param {string} audioId - The ID of the audio element (e.g., 'audio1').
+         * @param {string} valueId - The ID of the span that displays the current speed (e.g., 'speedValue1').
+         * @param {number} speed - The new speed value from the slider.
+         */
+        function changeSpeed(audioId, valueId, speed) {
+            const audio = document.getElementById(audioId);
+            const valueSpan = document.getElementById(valueId);
+            
+            // Set the new playback rate for the audio element
+            audio.playbackRate = speed;
+            
+            // Update the display text to show the new speed
+            valueSpan.textContent = speed + 'x';
+        }
+
+        /**
+         * Resets the playback speed to the default 1.0x.
+         * @param {string} audioId - The ID of the audio element.
+         * @param {string} sliderId - The ID of the slider element.
+         * @param {string} valueId - The ID of the span that displays the speed.
+         */
+        function resetSpeed(audioId, sliderId, valueId) {
+            const defaultSpeed = 1.0;
+            
+            // Reset the slider visually
+            document.getElementById(sliderId).value = defaultSpeed;
+            
+            // Apply the speed change using the existing function
+            changeSpeed(audioId, valueId, defaultSpeed);
+        }
+    </script>
 
 </body>
 </html>
